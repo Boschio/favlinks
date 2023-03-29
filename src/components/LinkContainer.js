@@ -1,9 +1,20 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Table from './Table';
 import Form from './Form';
 
 const LinkContainer = (props) => {
-const [links, setLinks] = useState([])
+  const [links, setLinks] = useState([])
+
+  useEffect(() => {
+    const links = JSON.parse(localStorage.getItem('links'));
+    if (links) {
+     setLinks(links);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('links', JSON.stringify(links))
+  }, [links])
 
   const handleRemove = (index) => {
     let newLinks = [...links]
