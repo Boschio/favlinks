@@ -2,7 +2,7 @@ import { React } from 'react'
 
 const TableHeader = () => {
   return (
-    <thead>
+    <thead className='head'>
       <tr>
         <th>Name</th>
         <th>URL</th>
@@ -22,7 +22,7 @@ const TableBody = ({ linkData, removeLink }) => {
           <a href={row.URL} rel='noreferrer' target='_blank' >{row.URL}</a>
         </td>
         <td>
-          <button onClick={() => removeLink(index)}>Delete</button>
+          <button className='delete-btn' onClick={() => removeLink(index)}><span className='btn-text'>Delete</span></button>
         </td>
       </tr>
     )

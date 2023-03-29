@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Table from './Table';
 import Form from './Form';
+import '../style.css';
 
 const LinkContainer = (props) => {
   const [links, setLinks] = useState([])

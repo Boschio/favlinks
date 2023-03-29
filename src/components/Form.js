@@ -17,17 +17,23 @@ const Form = ({ handleSubmit }) => {
     } else {
       handleSubmit(form)
       document.getElementById('form').reset()
-      setForm({})
+      setForm({name:"",URL:""})
     }
   }
 
   return (
     <form id='form' onSubmit={onFormSubmit}>
-      <label>Name</label>
-      <input type='text' name='name' onChange={handleChange}></input>
-      <label>URL</label>
-      <input type='text' name='URL' onChange={handleChange}></input>
-      <button type='submit'>Submit</button>
+      <div className='form-fields'>
+        <div className='form-name'>
+          <label>Name</label>
+          <input type='text' name='name' onChange={handleChange}></input>
+        </div>
+        <div className='form-url'>
+          <label>URL</label>
+          <input type='text' name='URL' onChange={handleChange}></input>
+        </div>
+        <button type='submit'><span className='btn-text'>Submit</span></button>
+      </div>
     </form>
   )
 }

@@ -1,0 +1,85 @@
+.container {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+thead {
+    border-collapse: collapse;
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    border-color: black;    
+}
+
+th, td {
+    text-align: left;
+    width: 50%;
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.116);
+    padding: 12px 0px 12px 0px;
+}
+
+.form-fields {
+    display: flex;
+    flex-direction: column;
+}
+.form-name {
+    display: flex;
+    flex-direction: column;
+    padding-top: 4px;
+    padding-bottom: 6px;
+}
+.form-url {
+    display: flex;
+    flex-direction: column;
+    padding-top: 6px;
+    padding-bottom: 12px;
+}
+label {
+    font-weight: 500;
+    padding: 0px 0px 12px 0px;
+}
+input {
+    width: 99%;
+    border-color: rgba(0, 0, 0, 0.232);
+    border-radius: 5px;
+}
+input:focus {
+    outline: none;
+    border-color: rgba(0, 0, 0, 0.232);
+    box-shadow: 0 0 4px #00000060;
+}
+
+button {
+    align-self: flex-start;
+    color: white;
+    background-color: rgb(40, 117, 250, 0.805);
+    border-radius: 8px;
+    padding: 10px 25px;
+    border: 1px solid rgb(40, 117, 250, 0.805);
+}
+
+button:hover {
+    border: 1px solid rgb(40, 117, 250, 0.805);
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
+
+.delete-btn {
+    border: 1px solid rgba(249, 13, 13, 0.805);
+    background-color: rgb(249, 13, 13, 0.805);
+}
+
+.delete-btn:hover {
+    border: 1px solid rgba(249, 13, 13, 0.805);
+}
+
+.btn-text {
+    font-weight: 700;
+}
+
+a:visited {
+  color: blue;
+  text-decoration: none;
+}
