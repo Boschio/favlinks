@@ -1,4 +1,4 @@
-\echo 'Delete and recreate Game On db?'
+\echo 'Delete and recreate favlinks db?'
 \prompt 'Return for yes or control-C to cancel > ' answer
 
 DROP DATABASE favlinks;
