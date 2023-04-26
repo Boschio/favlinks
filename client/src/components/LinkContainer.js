@@ -7,25 +7,44 @@ const LinkContainer = (props) => {
   const [links, setLinks] = useState([])
 
   useEffect(() => {
-    const links = JSON.parse(localStorage.getItem('links'));
-    if (links) {
-     setLinks(links);
+    const getLinks = async () => {
+      const data = await fetch('/links')
+      const json = await data.json()
+      setLinks(json)
     }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('links', JSON.stringify(links))
+    getLinks()
+    .catch(console.err)
+    
   }, [links])
 
-  const handleRemove = (index) => {
-    let newLinks = [...links]
-    newLinks.splice(index, 1)
-    setLinks(newLinks)
+  const handleRemove = async (id) => {
+    await fetch(`/links/${id}`, { method: 'DELETE' })  
   }
 
-  const handleSubmit = (form) => {
-    setLinks((links) => [...links, form])
+  const handleSubmit = async (form) => {
+    await fetch(`/links`, { method: 'POST', headers: { 'Content-Type': 'application/json' },body: JSON.stringify({ name:form.name,url:form.url })})
   }
+
+  // useEffect(() => {
+  //   const links = JSON.parse(localStorage.getItem('links'));"
+  //   if (links) {
+  //    setLinks(links);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   localStorage.setItem('links', JSON.stringify(links))
+  // }, [links])
+
+  // const handleRemove = (index) => {
+  //   let newLinks = [...links]
+  //   newLinks.splice(index, 1)
+  //   setLinks(newLinks)
+  // }
+
+  // const handleSubmit = (form) => {
+  //   setLinks((links) => [...links, form])
+  // }
 
   return (
     <div className="container">

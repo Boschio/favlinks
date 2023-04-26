@@ -19,10 +19,10 @@ const TableBody = ({ linkData, removeLink }) => {
       <tr key={index}>
         <td>{row.name}</td>
         <td>
-          <a href={row.URL} rel='noreferrer' target='_blank' >{row.URL}</a>
+          <a href={row.url} rel='noreferrer' target='_blank' >{row.url}</a>
         </td>
         <td>
-          <button className='delete-btn' onClick={() => removeLink(index)}><span className='btn-text'>Delete</span></button>
+          <button className='delete-btn' onClick={() => removeLink(row.id)}><span className='btn-text'>Delete</span></button>
         </td>
       </tr>
     )

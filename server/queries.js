@@ -30,6 +30,7 @@ const getLinks = (request, response) => {
   }
 
   const createLink = (request, response) => {
+    console.log("request: ", request)
     const { name, url } = request.body
   
     pool.query('INSERT INTO links (name, url) VALUES ($1, $2) RETURNING *', [name, url], (error, results) => {

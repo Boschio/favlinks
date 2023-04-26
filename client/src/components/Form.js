@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const Form = ({ handleSubmit }) => {
-  const [form, setForm] = useState({name:"",URL:""})
+  const [form, setForm] = useState({name:"",url:""})
   const handleChange = (event) => {
        setForm((form) => ({ ...form, [event.target.name]: event.target.value }))
   }
@@ -9,7 +9,7 @@ const Form = ({ handleSubmit }) => {
   const onFormSubmit = (event) => {
     event.preventDefault()
     
-    let url = form.URL
+    let url = form.url
     if (form.name === '' || form.url === '' || form === null) {
       window.alert("\nPlease enter a valid Name or URL:\n\nName field must not be blank. URL must start with 'https://'")
     } else if (!url.startsWith("http")) {
@@ -17,7 +17,7 @@ const Form = ({ handleSubmit }) => {
     } else {
       handleSubmit(form)
       document.getElementById('form').reset()
-      setForm({name:"",URL:""})
+      setForm({name:"",url:""})
     }
   }
 
@@ -30,7 +30,7 @@ const Form = ({ handleSubmit }) => {
         </div>
         <div className='form-url'>
           <label>URL</label>
-          <input type='text' name='URL' onChange={handleChange}></input>
+          <input type='text' name='url' onChange={handleChange}></input>
         </div>
         <button type='submit'><span className='btn-text'>Submit</span></button>
       </div>
