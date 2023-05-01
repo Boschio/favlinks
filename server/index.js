@@ -8,6 +8,8 @@ const db = require('./queries')
 
 const PORT = process.env.PORT || 8000;
 
+const auth = require('./auth')
+
 const app = express();
 
 app.use(bodyParser.json())
@@ -20,7 +22,9 @@ app.use(
 //host react app as static files
 app.use(express.static(path.resolve(__dirname, '../client/build')))
 
-app.get('/', (request, response) =>{
+app.use('/', auth)
+
+app.get('/', (request, response) => {
     response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
 })
 
