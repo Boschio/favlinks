@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 
 const path = require('path')
 
-const db = require('./queries')
+const db = require('./db')
 
 const PORT = process.env.PORT || 8000;
 
@@ -24,7 +24,7 @@ app.use(express.static(path.resolve(__dirname, '../client/build')))
 
 app.use('/', auth)
 
-app.get('/', (request, response) => {
+app.get('/*', (request, response) => {
     response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
 })
 

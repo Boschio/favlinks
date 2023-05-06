@@ -1,5 +1,7 @@
 require("dotenv").config()
 
+const bcrypt = require("bcryptjs")
+
 const Pool = require('pg').Pool
 const pool = new Pool({
     user: process.env.DATABASE_USER,
@@ -68,10 +70,40 @@ const getLinks = (request, response) => {
     })
   }
 
+  const usernameExists = async (username) => {
+    const data = await pool.query("SELECT * FROM users WHERE username=$1", [
+    username,
+    ]);
+  
+    if (data.rowCount == 0) return false; 
+    return data.rows[0];
+  };
+
+  const createUser = async (username, password) => {
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(password, salt);
+      
+      const data = await pool.query(
+        "INSERT INTO users(username, password) VALUES ($1, $2) RETURNING id, username, password",
+        [username, hash]
+      );
+       
+      if (data.rowCount == 0) return false;
+      return data.rows[0];
+  };  
+
+  const matchPassword = async (password, hashPassword) => {
+    const match = await bcrypt.compare(password, hashPassword);
+    return match
+  };
+
   module.exports = {
     getLinks,
     getLinkById,
     createLink,
     updateLink,
     deleteLink,
+    usernameExists,
+    createUser,
+    matchPassword,
   }

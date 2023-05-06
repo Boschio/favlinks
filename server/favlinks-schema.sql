@@ -1,3 +1,9 @@
+CREATE TABLE users (
+  ID SERIAL PRIMARY KEY,
+  username TEXT UNIQUE,
+  password TEXT
+);
+
 CREATE TABLE links (
   ID SERIAL PRIMARY KEY,
   name VARCHAR(30),

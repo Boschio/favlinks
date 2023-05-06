@@ -5,32 +5,71 @@ const LocalStrategy = require('passport-local')
 
 const crypto = require('crypto')
 
-const db = require('./queries')
+const db = require('./db')
 
-passport.use(new LocalStrategy(function verify(username, password, cb) {
-  db.get('SELECT * FROM users WHERE username = ?', [ username ], function(err, row) {
-    if (err) { return cb(err); }
-    if (!row) { return cb(null, false, { message: 'Incorrect username or password.' }); }
+passport.use(
+  "local-signup",
+  new LocalStrategy(
+    {
+      username: "username",
+      password: "password",
+    },
+    async (username, password, done) => {
+      try {
+        const userExists = await db.usernameExists(username);
 
-    crypto.pbkdf2(password, row.salt, 310000, 32, 'sha256', function(err, hashedPassword) {
-      if (err) { return cb(err); }
-      if (!crypto.timingSafeEqual(row.hashed_password, hashedPassword)) {
-        return cb(null, false, { message: 'Incorrect username or password.' });
+        if (userExists) {
+          return done(null, false);
+        }
+
+        const user = await db.createUser(username, password);
+        return done(null, user);
+      } catch (error) {
+        done(error);
       }
-      return cb(null, row);
-    });
-  });
-}));
+    }
+  )
+);
+
+passport.use(
+  "local-login",
+  new LocalStrategy(
+    {
+      username: "username",
+      password: "password",
+    },
+    async (username, password, done) => {
+      try {
+        const user = await db.usernameExists(username);
+        if (!user) return done(null, false);
+        const isMatch = await db.matchPassword(password, user.password);
+        if (!isMatch) return done(null, false);
+        return done(null, { id: user.id, username: user.username });
+      } catch (error) {
+        return done(error, false);
+      }
+    }
+  )
+);
 
 const router = express.Router();
 
-router.get('/login', (req, res, next) => {
-  res.render('login');
-});
+router.post(
+  "/auth/signup",
+  passport.authenticate("local-signup", { session: false }),
+  (req, res, next) => {
+    res.json({
+      user: req.user,
+    });
+  }
+);
 
-router.post('/login/password', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login'
-}));
+router.post(
+  "/auth/login",
+  passport.authenticate("local-login", { session: false }),
+  (req, res, next) => {
+    res.json({ user: req.user });
+  }
+);
 
 module.exports = router;
